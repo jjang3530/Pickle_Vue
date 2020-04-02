@@ -80,21 +80,31 @@ export default {
     },
     editCustomer(data) {
       this.loader = true;
-      console.log(`${this.url}/${data.clientId}`);
-      console.log(data);
+      //console.log(`${this.url}/${data.clientId}`);
+      //console.log(data);
 
       axios
-        .put(`${this.url}/${data.clientId}`, {
+        .put(`${this.url}/${data.clientId}`, 
+        
+        {
+          clientId: data.clientId,
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email
-        })
-        .then(() => {
+        },
+        {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+         })
+        .then((res) => {
           this.getCustomers();
+          console.log(res.data)
         })
-        .catch(e => {
-          alert(e);
-        });
+        .catch(error => {
+    console.log(error.response)
+});
     },
     onDelete(id) {
       // window.console.log("app delete " + id);
